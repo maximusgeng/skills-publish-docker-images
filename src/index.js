@@ -38,6 +38,7 @@ let currentPiece = null;
 let currentX = 0;
 let currentY = 0;
 let score = 0;
+let highScore = Number(localStorage.getItem("stackoverflownHighScore")) || 0;
 let gameOver = false;
 let isPaused = false;
 let dropCounter = 0;
@@ -306,7 +307,12 @@ function clearPattern(startRow, startCol) {
 
 // Update score display
 function updateScore() {
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("stackoverflownHighScore", String(highScore));
+  }
   document.getElementById("score").textContent = score;
+  document.getElementById("high-score").textContent = highScore;
 }
 
 // Handle keyboard input
@@ -345,7 +351,6 @@ function handleKeyPress(e) {
 // Toggle pause
 function togglePause() {
   isPaused = !isPaused;
-  document.getElementById("status").textContent = isPaused ? "Paused" : "Playing...";
 }
 
 // End game
